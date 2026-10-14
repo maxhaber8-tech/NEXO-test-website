@@ -1,0 +1,5 @@
+.DS_Store
+node_modules/
+temporary screenshots/
+# design reference screenshot of a third-party site — not ours to publish
+www.lev.com_.png

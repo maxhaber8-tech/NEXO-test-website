@@ -1,0 +1,787 @@
+<!doctype html>
+<html lang="en" class="theme-marketing dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NEXO — Do less work. Close more deals.</title>
+  <meta name="description" content="NEXO brings cutting-edge superintelligence products and experiences to the best commercial real estate companies in the country.">
+  <link rel="icon" type="image/png" href="Brand_Assets/nexo-logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ---------- Tokens (NEXO brand guidelines: Brand_Assets/) ---------- */
+    :root {
+      /* Brand palette */
+      --nexo-blue: #3B82F6;    /* Primary Blue */
+      --nexo-navy: #0F172A;    /* Dark Blue */
+      --nexo-teal: #14B8A6;    /* Teal */
+      --nexo-charcoal: #111827;/* Charcoal */
+      --nexo-grey: #64748B;    /* Medium Grey */
+      --nexo-white: #FFFFFF;   /* White */
+
+      --canvas: #0A1020;       /* deepened Dark Blue for page base */
+      --canvas-deep: #070B17;
+      --card: #141D30;
+      --card-2: #1A2438;
+      --window: var(--nexo-charcoal);
+      --foreground: #F5F7FA;
+      --muted-foreground: #94A0B4;
+      --dim: var(--nexo-grey);
+      --border: rgb(148 163 184 / 13%);
+      --border-strong: rgb(148 163 184 / 20%);
+      --cta: var(--nexo-blue);
+      --cta-hover: #2F72E8;
+      --cta-ink: var(--nexo-white);
+      --mint: var(--nexo-teal);
+      --approved-bg: rgb(20 184 166 / 14%);
+      --approved-fg: #4FD1C1;
+      --rejected-bg: rgb(220 120 110 / 14%);
+      --rejected-fg: #e0a49c;
+
+      --type-home-display: clamp(2.5rem, 1.5rem + 3vw, 4rem);
+      --type-section: clamp(1.75rem, 1.5rem + .75vw, 2rem);
+      --type-statement: clamp(1.5rem, .75rem + 2.5vw, 2.5rem);
+      --type-card: clamp(1.25rem, .75rem + 1.25vw, 1.75rem);
+
+      --pad: 1rem;
+      --ease-spring: cubic-bezier(.22, 1.2, .36, 1);
+      --ease-out: cubic-bezier(.16, 1, .3, 1);
+      color-scheme: dark;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; border: 0 solid; }
+    html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+    body {
+      background: var(--canvas);
+      color: var(--foreground);
+      font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+    img, svg { display: block; }
+    h1, h2, h3, .tab, .mobile-menu a { font-family: "Space Grotesk", "Inter", sans-serif; }
+    button { font: inherit; color: inherit; background: none; cursor: pointer; }
+    a { color: inherit; text-decoration: none; }
+    :focus-visible { outline: 2px solid var(--cta); outline-offset: 3px; }
+
+    /* ---------- Buttons ---------- */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      height: 40px; padding: 0 24px; border-radius: 10px;
+      font-size: 15px; font-weight: 500; letter-spacing: -.01em; white-space: nowrap;
+      transition: transform .35s var(--ease-spring), background-color .2s ease, border-color .2s ease;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn:active { transform: translateY(0) scale(.97); }
+    .btn-cta { background: var(--cta); color: var(--cta-ink); box-shadow: 0 8px 24px -10px rgb(59 130 246 / 60%), inset 0 1px 0 rgb(255 255 255 / 18%); }
+    .btn-cta:hover { background: var(--cta-hover); }
+    .btn-ghost {
+      background: rgb(15 23 42 / 60%); color: var(--foreground);
+      border: 1px solid rgb(59 130 246 / 55%);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    }
+    .btn-ghost:hover { border-color: var(--nexo-blue); background: rgb(15 23 42 / 80%); }
+
+    /* ---------- Header ---------- */
+    .site-header {
+      position: absolute; inset: 0 0 auto 0; z-index: 50;
+      height: 64px; padding: 0 var(--pad);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo { display: flex; align-items: center; border-radius: 6px; }
+    /* PNG ships on a dark navy ground; #logo-knockout turns that ground transparent */
+    .logo img { height: 24px; width: auto; filter: url(#logo-knockout); }
+    .header-actions { display: flex; align-items: center; gap: 18px; }
+    .header-actions .btn { height: 34px; padding: 0 13px; font-size: 13px; }
+    .nav-desktop { display: none; }
+    .menu-btn {
+      width: 36px; height: 36px; display: grid; place-items: center; border-radius: 8px;
+      transition: background-color .2s ease, transform .3s var(--ease-spring);
+    }
+    .menu-btn:hover { background: rgb(255 255 255 / 8%); }
+    .menu-btn:active { transform: scale(.92); }
+    .menu-btn span { display: block; width: 19px; height: 1.5px; background: #fff; border-radius: 2px; }
+    .menu-btn span + span { margin-top: 5px; }
+    .menu-btn .bars { display: block; }
+
+    .mobile-menu {
+      position: fixed; inset: 0; z-index: 60; background: var(--canvas);
+      padding: 80px 24px 32px; display: flex; flex-direction: column; gap: 4px;
+      opacity: 0; pointer-events: none; transform: translateY(-8px);
+      transition: opacity .25s ease, transform .4s var(--ease-out);
+    }
+    .mobile-menu.open { opacity: 1; pointer-events: auto; transform: none; }
+    .mobile-menu a { font-size: 26px; font-weight: 500; letter-spacing: -.015em; padding: 10px 0; border-bottom: 1px solid var(--border); }
+    .mobile-menu a:hover { color: var(--cta); }
+    .mobile-menu .btn { margin-top: 24px; height: 46px; font-size: 16px; }
+    .menu-close { position: absolute; top: 14px; right: 16px; width: 36px; height: 36px; display: grid; place-items: center; border-radius: 8px; }
+    .menu-close:hover { background: rgb(255 255 255 / 8%); }
+
+    .side-widget {
+      position: fixed; right: 0; top: 84px; z-index: 40;
+      width: 42px; height: 48px; border-radius: 10px 0 0 10px;
+      background: var(--nexo-navy); border: 1px solid rgb(59 130 246 / 35%); border-right: 0; display: grid; place-items: center;
+      box-shadow: 0 6px 18px -8px rgb(0 0 0 / 60%);
+      transition: transform .3s var(--ease-spring);
+    }
+    .side-widget:hover { transform: translateX(-3px); }
+
+    /* ---------- Hero ---------- */
+    .hero { position: relative; min-height: 900px; isolation: isolate; }
+    .hero-media { position: absolute; inset: 0; z-index: -1; overflow: hidden; }
+    .hero-media img {
+      width: 100%; height: 100%; object-fit: cover; object-position: 43% 30%;
+      filter: saturate(.85) brightness(.8);
+    }
+    /* dusk tint over the sky + fade into canvas */
+    .hero-media::before {
+      content: ""; position: absolute; inset: 0; z-index: 1;
+      background: linear-gradient(180deg, #1E3A8A 0%, #2A4F9E 35%, rgb(42 79 158 / 0%) 62%);
+      mix-blend-mode: color;
+    }
+    .hero-media::after {
+      content: ""; position: absolute; inset: 0; z-index: 2;
+      background:
+        linear-gradient(180deg, rgb(10 16 32 / 50%) 0%, rgb(10 16 32 / 15%) 30%, rgb(10 16 32 / 25%) 55%, rgb(10 16 32 / 78%) 80%, var(--canvas) 96%);
+    }
+    .hero-inner { padding: 474px var(--pad) 0; max-width: 1440px; margin: 0 auto; }
+    .hero h1 {
+      font-size: 46px; font-weight: 600; line-height: 1.04; letter-spacing: -.035em;
+      color: #fff;
+    }
+    .hero p {
+      margin-top: 30px; max-width: 23em; font-size: 16.5px; line-height: 1.45;
+      color: rgb(255 255 255 / 86%); letter-spacing: -.005em;
+    }
+    .hero-ctas { margin-top: 38px; display: flex; gap: 13px; }
+    .hero-ctas .btn { min-width: 131px; }
+    .explore {
+      margin: 38px auto 0; display: flex; flex-direction: column; align-items: center; gap: 12px;
+      width: max-content; color: rgb(255 255 255 / 82%);
+      font-size: 9px; letter-spacing: .26em;
+    }
+    .mouse { width: 22px; height: 34px; border: 1.5px solid rgb(255 255 255 / 55%); border-radius: 12px; position: relative; }
+    .mouse::after {
+      content: ""; position: absolute; left: 50%; top: 7px; width: 3px; height: 3px; margin-left: -1.5px;
+      background: #fff; border-radius: 50%;
+      animation: wheel 1.8s var(--ease-out) infinite;
+    }
+    @keyframes wheel { 0% { opacity: 0; transform: translateY(0); } 25% { opacity: 1; } 80%, 100% { opacity: 0; transform: translateY(10px); } }
+
+    /* ---------- Logos ---------- */
+    .logos { padding: 320px 0 76px; }
+    .marquee {
+      overflow: hidden;
+      mask-image: linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%);
+      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%);
+    }
+    .marquee-track { display: flex; align-items: center; gap: 30px; width: max-content; animation: marquee 32s linear infinite; }
+    .marquee:hover .marquee-track { animation-play-state: paused; }
+    @keyframes marquee { to { transform: translateX(-50%); } }
+    .brand { color: #7C889C; white-space: nowrap; line-height: 1; }
+    .brand-a { font-family: "Didot", "Bodoni 72", Georgia, serif; font-size: 27px; letter-spacing: .2em; transform: scaleY(1.25); font-weight: 400; }
+    .brand-b { font-family: "Arial Black", "Helvetica Neue", sans-serif; font-weight: 900; font-size: 16px; letter-spacing: .02em; color: #94A0B4; }
+    .brand-c { font-size: 11px; letter-spacing: .06em; font-weight: 400; }
+    .brand-d { font-size: 17px; font-weight: 300; letter-spacing: .32em; }
+    .brand-e { font-family: Georgia, serif; font-style: italic; font-size: 20px; }
+
+    /* ---------- Purpose / feature panel ---------- */
+    .purpose { border-top: 1px solid var(--border); padding: 80px var(--pad) 0; }
+    .wrap { max-width: 1240px; margin: 0 auto; }
+    .purpose h2 {
+      font-size: var(--type-section); font-weight: 500; line-height: 1.15; letter-spacing: -.015em;
+      max-width: 9.8em; font-size: 30px;
+    }
+    .panel {
+      margin-top: 50px; border: 1px solid var(--border); border-bottom-width: 1px;
+      border-radius: 24px;
+    }
+    .feature { padding: 34px 24px 72px; border-top: 1px solid var(--border); }
+    .feature:first-child { border-top: 0; }
+    .feature-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+    .feature h3 {
+      font-size: 21px; font-weight: 500; line-height: 1.2; letter-spacing: -.015em;
+      color: var(--muted-foreground); max-width: 13em;
+    }
+    .feature h3 b { color: var(--foreground); font-weight: 500; }
+    .arrow-btn {
+      flex: none; width: 32px; height: 32px; border-radius: 50%;
+      border: 1px solid rgb(59 130 246 / 40%); display: grid; place-items: center; color: var(--nexo-blue);
+      transition: transform .35s var(--ease-spring), background-color .2s ease, border-color .2s ease;
+    }
+    .arrow-btn:hover { background: rgb(59 130 246 / 12%); border-color: var(--nexo-blue); transform: rotate(45deg); }
+    .arrow-btn:active { transform: rotate(45deg) scale(.92); }
+
+    /* Mockups are drawn at 2x and zoomed to fit */
+    .mock-stage { margin-top: 68px; display: flex; justify-content: center; }
+    .mock { width: 528px; zoom: .5; font-size: 16px; color: #E6EBF2; }
+
+    .bubble-row { display: flex; justify-content: flex-end; }
+    .bubble { background: var(--card-2); border-radius: 14px; padding: 12px 17px; font-size: 16px; }
+    .reply { margin: 34px 0 20px; font-size: 16px; }
+    .contact {
+      background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+      padding: 20px 20px 18px; margin-top: 14px;
+    }
+    .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .who { display: flex; align-items: center; gap: 14px; }
+    .avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; background: #2A3448; border: 1px solid rgb(255 255 255 / 12%); }
+    .avatar.lg { width: 48px; height: 48px; }
+    .name { font-size: 17px; font-weight: 500; line-height: 1.25; }
+    .sub { font-size: 14px; color: var(--muted-foreground); }
+    .fit { display: flex; align-items: center; gap: 7px; font-size: 14px; color: var(--muted-foreground); }
+    .fit b { color: #E6EBF2; font-weight: 500; font-size: 15px; }
+    .bar { display: flex; gap: 1.5px; }
+    .bar i { width: 2.5px; height: 9px; background: var(--mint); border-radius: 1px; }
+    .bar i.off { background: #2A3448; }
+    .deal { margin-top: 20px; font-size: 15px; }
+    .deal b { font-weight: 600; }
+    .contact .row:last-child { margin-top: 12px; }
+    .add { display: flex; align-items: center; gap: 6px; font-size: 14px; color: var(--muted-foreground); font-weight: 500; border-radius: 6px; padding: 2px 4px; margin-right: -4px; transition: color .2s ease, background-color .2s ease; }
+    .add:hover { color: #fff; background: rgb(255 255 255 / 6%); }
+
+    /* Screen mock: inbox stack */
+    .stack { position: relative; padding: 10px 0;
+      mask-image: linear-gradient(180deg, transparent 0, #000 22%, #000 78%, transparent 100%);
+      -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 22%, #000 78%, transparent 100%);
+    }
+    .mail {
+      background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+      padding: 16px 20px 14px; margin: 14px 6px 0;
+    }
+    .mail.active { margin-left: 0; margin-right: 0; background: #1A2540; border-color: rgb(59 130 246 / 35%); box-shadow: 0 18px 40px -24px rgb(59 130 246 / 35%); }
+    .mail .title { display: flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 500; }
+    .mail .from { font-size: 14px; color: var(--muted-foreground); }
+    .mail .time { font-size: 14px; color: var(--muted-foreground); align-self: flex-end; }
+    .mail .body { margin-top: 14px; font-size: 14px; color: #B4BECC; }
+    .mail .meta { margin-top: 16px; font-size: 14px; color: var(--muted-foreground); }
+    .badge { display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0 10px; border-radius: 999px; font-size: 14px; font-weight: 500; }
+    .badge.ok { background: var(--approved-bg); color: var(--approved-fg); border: 1px solid rgb(20 184 166 / 25%); }
+    .badge.no { background: var(--rejected-bg); color: var(--rejected-fg); border: 1px solid rgb(224 164 156 / 18%); }
+
+    /* Execute mock: timeline */
+    .tl { position: relative; }
+    .tl-item { position: relative; padding-left: 43px; padding-bottom: 22px; }
+    .tl-item::before { content: ""; position: absolute; left: 14px; top: 32px; bottom: 4px; width: 1.5px; background: #2A3448; }
+    .tl-item:last-child::before { display: none; }
+    .tl-icon { position: absolute; left: 0; top: -2px; width: 29px; height: 29px; border-radius: 50%; display: grid; place-items: center; background: #1E2840; border: 1px solid rgb(255 255 255 / 10%); }
+    .tl-icon img { width: 29px; height: 29px; border-radius: 50%; }
+    .tl-line { font-size: 16px; color: var(--muted-foreground); display: flex; align-items: center; flex-wrap: wrap; gap: 0 6px; }
+    .tl-line b { color: #EEF2F7; font-weight: 500; }
+    .org { display: inline-flex; align-items: center; gap: 6px; color: #EEF2F7; font-weight: 500; }
+    .org i { width: 15px; height: 15px; border-radius: 4px; background: var(--nexo-blue); display: grid; place-items: center; }
+    .org i::after { content: ""; width: 7px; height: 7px; border-radius: 50%; border: 1.5px solid #fff; }
+    .tl-box { margin-top: 14px; background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 12px 13px; font-size: 15px; }
+    .tl-box b { font-weight: 500; }
+    .tl-box p { font-size: 14px; color: #CDD5E0; line-height: 1.45; }
+    .chips { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+    .chip { display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0 10px; background: #1E2840; border-radius: 6px; font-size: 14px; color: #DCE2EA; }
+    .pdf-ico { width: 13px; height: 14px; border-radius: 2px; background: #c0493f; }
+
+    /* Close mock: requested files */
+    .files { width: 498px; background: #131C2E; border: 1px solid var(--border); border-radius: 14px; padding: 16px 15px 15px; }
+    .files-head { display: flex; justify-content: space-between; font-size: 16px; font-weight: 500; }
+    .files-head span { color: var(--muted-foreground); font-weight: 400; font-size: 14px; }
+    .file { display: flex; gap: 16px; padding: 12px 0 10px; border-bottom: 1px solid var(--border); }
+    .file:last-of-type { border-bottom: 0; }
+    .radio { width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid #A8B3C3; flex: none; margin-top: 2px; }
+    .file b { display: block; font-size: 15px; font-weight: 500; }
+    .file span { font-size: 14px; color: var(--muted-foreground); }
+    .drop {
+      margin-top: 14px; height: 76px; border: 1.5px dashed rgb(59 130 246 / 60%); border-radius: 10px;
+      display: grid; place-items: center; position: relative;
+    }
+    .drop-chip { display: flex; align-items: center; gap: 6px; background: #1E2840; border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px 10px 14px; font-size: 14px; font-weight: 500; transform: translateX(-14px); }
+    .ftile { width: 24px; height: 24px; border-radius: 5px; display: grid; place-items: center; }
+    .ftile.r { background: #a8443f; }
+    .ftile.g { background: #2f7a4f; }
+    .drop-chip .ftile + span { margin-left: 8px; }
+    .cursor { position: absolute; left: 315px; top: 52px; }
+
+    /* ---------- Knowledge ---------- */
+    .knowledge { position: relative; height: 600px; margin-top: 160px; overflow: hidden; display: grid; place-items: center; }
+    .knowledge h2 {
+      position: relative; z-index: 2; text-align: center; padding: 0 var(--pad);
+      font-size: 30px; font-weight: 400; line-height: 1.1; letter-spacing: -.01em; color: var(--muted-foreground);
+      max-width: 13em;
+    }
+    .knowledge h2 b { display: block; color: #fff; font-weight: 400; }
+    .app-tile {
+      position: absolute; width: 92px; height: 64px; border-radius: 8px;
+      background: linear-gradient(180deg, #111827, #0B1120);
+      border: 1px solid rgb(148 163 184 / 8%);
+      box-shadow: 0 10px 24px -14px rgb(2 6 23 / 80%);
+      display: grid; place-items: center;
+      animation: drift 9s ease-in-out infinite alternate;
+    }
+    .app-tile.blur svg { filter: blur(1.6px); opacity: .75; }
+    .app-tile svg { width: 26px; height: 28px; opacity: .85; }
+    @keyframes drift { to { transform: translateY(-10px); } }
+
+    /* ---------- Chat window ---------- */
+    .chat-section { padding: 90px 24px 0; }
+    .window {
+      max-width: 760px; margin: 0 auto; background: var(--window);
+      border: 1px solid rgb(255 255 255 / 9%); border-radius: 26px 26px 26px 26px;
+      box-shadow: 0 40px 60px -40px rgb(0 0 0 / 80%);
+      display: flex; flex-direction: column; min-height: 520px;
+    }
+    .window-head { height: 40px; padding: 0 16px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
+    .window-head h4 { font-size: 11px; font-weight: 500; }
+    .win-ctrls { display: flex; gap: 10px; color: #94A0B4; }
+    .win-ctrls button { width: 16px; height: 16px; display: grid; place-items: center; border-radius: 4px; transition: color .2s ease, background-color .2s ease; }
+    .win-ctrls button:hover { color: #fff; background: rgb(255 255 255 / 8%); }
+    .window-body { flex: 1; }
+    .composer {
+      margin: 0 16px 16px; background: #18223A; border: 1px solid var(--border-strong); border-radius: 16px;
+      padding: 10px 12px 8px;
+    }
+    .composer input { width: 100%; background: transparent; font: inherit; font-size: 13.5px; color: #fff; border: 0; outline: 0; padding: 2px 0 0; }
+    .composer input::placeholder { color: #7C8AA0; }
+    .composer .row { margin-top: 10px; }
+    .tools { display: flex; align-items: center; gap: 10px; color: #9AA6B8; font-size: 13px; }
+    .tools button { border-radius: 6px; padding: 2px; transition: color .2s ease; }
+    .tools button:hover { color: #fff; }
+    .agent { display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0 9px; border-radius: 999px; border: 1px solid var(--border-strong); background: #0F172A; font-size: 10.5px; font-weight: 500; transition: border-color .2s ease; }
+    .agent:hover { border-color: rgb(255 255 255 / 30%); }
+    .send { width: 24px; height: 24px; border-radius: 50%; background: var(--cta); color: var(--cta-ink); display: grid; place-items: center; transition: transform .3s var(--ease-spring), background-color .2s ease; }
+    .send:hover { background: var(--cta-hover); transform: translateY(-1px); }
+    .send:active { transform: scale(.9); }
+
+    /* ---------- Solutions carousel ---------- */
+    .solutions { margin-top: 300px; border-top: 1px solid var(--border); }
+    .solutions .frame { margin: 0 var(--pad); border-left: 1px solid var(--border); border-right: 1px solid var(--border); padding: 205px 0 0; overflow: hidden; }
+    .tabs { position: relative; height: 30px; }
+    .tabs-track { position: absolute; left: 50%; top: 0; display: flex; gap: 70px; transition: transform .6s var(--ease-out); }
+    .tab { font-size: 15px; font-weight: 500; color: rgb(255 255 255 / 45%); white-space: nowrap; transition: color .3s ease; border-radius: 6px; }
+    .tab:hover { color: rgb(255 255 255 / 75%); }
+    .tab[aria-selected="true"] { color: #fff; }
+    .ruler { position: relative; height: 22px; margin: 24px 14px 0; display: flex; align-items: flex-end; justify-content: center; gap: 0; overflow: hidden; }
+    .ruler-ticks { display: flex; align-items: flex-end; gap: 12px; transition: transform .6s var(--ease-out); }
+    .ruler-ticks i { width: 1px; height: 8px; background: rgb(255 255 255 / 30%); flex: none; }
+    .ruler-ticks i.major { height: 12px; }
+    .ruler::after { content: ""; position: absolute; left: 50%; bottom: 0; width: 2px; height: 20px; margin-left: -1px; background: var(--nexo-blue); border-radius: 1px; }
+    .sol-card { margin: 24px 20px 0; border: 1px solid var(--border); border-bottom: 0; border-radius: 24px 24px 0 0; }
+    .sol-copy { padding: 32px 28px 32px; min-height: 196px; }
+    .sol-copy h3 { font-size: 18px; font-weight: 500; line-height: 1.4; letter-spacing: -.005em; max-width: 12.4em; }
+    .sol-copy p { margin-top: 16px; font-size: 14.5px; line-height: 1.65; color: var(--muted-foreground); max-width: 32ch; }
+    .sol-media { height: 280px; border-top: 1px solid var(--border); }
+    .fade-swap { transition: opacity .3s ease; }
+    .fade-swap.out { opacity: 0; }
+
+    /* ---------- Larger screens ---------- */
+    @media (min-width: 900px) {
+      :root { --pad: 2.5rem; }
+      .site-header { height: 76px; }
+      .nav-desktop { display: flex; gap: 28px; font-size: 14px; color: rgb(255 255 255 / 82%); }
+      .nav-desktop a { transition: color .2s ease; }
+      .nav-desktop a:hover { color: #fff; }
+      .menu-btn { display: none; }
+      .header-actions .btn { height: 38px; padding: 0 18px; font-size: 14px; }
+      .hero { min-height: clamp(640px, 100vh, 920px); }
+      .hero-media img { object-position: 50% 42%; }
+      .hero-inner { padding-top: 0; min-height: clamp(640px, 100vh, 920px); display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 60px; }
+      .hero h1 { font-size: var(--type-home-display); }
+      .hero p { font-size: 18px; }
+      .logos { padding-top: 160px; }
+      .purpose { padding-top: 110px; }
+      .purpose h2 { font-size: 44px; max-width: 14em; }
+      .knowledge h2 { max-width: 19em; }
+      .feature { display: grid; grid-template-columns: 1fr 1.15fr; gap: 48px; padding: 56px 48px 64px; }
+      .feature h3 { font-size: 32px; line-height: 1.12; }
+      .feature-head { flex-direction: column; justify-content: space-between; }
+      .mock-stage { margin-top: 0; }
+      .mock { zoom: .9; }
+      .knowledge { height: 720px; }
+      .knowledge h2 { font-size: var(--type-statement); }
+      .window-head { height: 52px; padding: 0 22px; }
+      .window-head h4 { font-size: 15px; }
+      .window { min-height: 620px; }
+      .composer input { font-size: 16px; }
+      .agent { font-size: 13px; height: 30px; }
+      .send { width: 30px; height: 30px; }
+      .sol-card { max-width: 920px; margin-left: auto; margin-right: auto; }
+      .sol-copy { padding: 48px 56px; }
+      .sol-copy h3 { font-size: var(--type-card); line-height: 1.25; }
+      .sol-copy p { font-size: 16px; }
+      .sol-media { height: 420px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition-duration: 0s !important; }
+    }
+  </style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <filter id="logo-knockout" color-interpolation-filters="sRGB">
+      <!-- alpha keyed off the blue channel: navy ground → 0, white + blue X → 1 -->
+      <feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 1.8 0 -.3"/>
+    </filter>
+  </svg>
+
+  <!-- Header -->
+  <header class="site-header">
+    <a href="#" class="logo" aria-label="NEXO home">
+      <img src="Brand_Assets/nexo-logo.png" alt="NEXO" width="450" height="110">
+    </a>
+    <nav class="nav-desktop" aria-label="Primary">
+      <a href="#product">Product</a><a href="#solutions">Solutions</a><a href="#">Customers</a><a href="#">Company</a>
+    </nav>
+    <div class="header-actions">
+      <a href="#" class="btn btn-cta">Book a demo</a>
+      <button class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu" id="menu-open">
+        <span class="bars"><span></span><span></span><span></span></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <button class="menu-close" id="menu-close" aria-label="Close menu">
+      <svg width="18" height="18" viewBox="0 0 18 18" stroke="currentColor" stroke-width="1.6" fill="none"><path d="M3 3l12 12M15 3L3 15"/></svg>
+    </button>
+    <a href="#product">Product</a><a href="#solutions">Solutions</a><a href="#">Customers</a><a href="#">Company</a>
+    <a href="#" class="btn btn-cta">Book a demo</a>
+  </div>
+
+  <button class="side-widget" aria-label="Open assistant">
+    <svg width="30" height="30" viewBox="0 0 30 30" stroke="#3B82F6" stroke-width="3.2" stroke-linecap="round" fill="none" aria-hidden="true">
+      <path d="M15 3v7M15 20v7M3 15h7M20 15h7M6.5 6.5l5 5M18.5 18.5l5 5M23.5 6.5l-5 5M11.5 18.5l-5 5"/>
+    </svg>
+  </button>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-media">
+        <img src="https://images.unsplash.com/photo-1485871981521-5b1fd3805eee?w=1800&q=80&auto=format&fit=crop" alt="Manhattan skyline at dusk with the Empire State Building lit up">
+      </div>
+      <div class="hero-inner">
+        <h1>Do less work.<br>Close more deals.</h1>
+        <p>NEXO brings cutting-edge superintelligence products and experiences to the best commercial real estate companies in the country.</p>
+        <div class="hero-ctas">
+          <a href="#" class="btn btn-cta">Book a demo</a>
+          <a href="#" class="btn btn-ghost">Get started</a>
+        </div>
+        <a href="#product" class="explore"><span class="mouse"></span>EXPLORE</a>
+      </div>
+    </section>
+
+    <!-- Logos -->
+    <section class="logos" aria-label="Customers">
+      <div class="marquee">
+        <div class="marquee-track">
+          <span class="brand brand-a">GREYSTONE</span>
+          <span class="brand brand-b">MATTHEWS™</span>
+          <span class="brand brand-c">TIME EQUITIES</span>
+          <span class="brand brand-d">NORTHGATE</span>
+          <span class="brand brand-e">Halvorsen &amp; Co.</span>
+          <span class="brand brand-b">MERIDIAN</span>
+          <span class="brand brand-a">GREYSTONE</span>
+          <span class="brand brand-b">MATTHEWS™</span>
+          <span class="brand brand-c">TIME EQUITIES</span>
+          <span class="brand brand-d">NORTHGATE</span>
+          <span class="brand brand-e">Halvorsen &amp; Co.</span>
+          <span class="brand brand-b">MERIDIAN</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Purpose built -->
+    <section class="purpose" id="product">
+      <div class="wrap">
+        <h2>Purpose built for your commercial real estate workflows.</h2>
+
+        <div class="panel">
+
+          <!-- Source -->
+          <article class="feature">
+            <div class="feature-head">
+              <h3><b>Source</b> new deals from billions of data points.</h3>
+              <a href="#" class="arrow-btn" aria-label="Learn about sourcing">
+                <svg width="14" height="14" viewBox="0 0 14 14" stroke="currentColor" stroke-width="1.4" fill="none"><path d="M3 11L11 3M5 3h6v6"/></svg>
+              </a>
+            </div>
+            <div class="mock-stage">
+              <div class="mock">
+                <div class="bubble-row"><div class="bubble">Find NYC sponsors with $20M+ construction deals.</div></div>
+                <p class="reply">I found two contacts that match your brief:</p>
+                <div class="contact">
+                  <div class="row">
+                    <div class="who">
+                      <img class="avatar" src="https://i.pravatar.cc/80?img=12" alt="">
+                      <div><div class="name">Noah Cohen</div><div class="sub">Union Street Development</div></div>
+                    </div>
+                    <div class="fit"><span class="bar"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="off"></i></span><b>88</b>fit</div>
+                  </div>
+                  <p class="deal"><b>$31M</b> construction loan recorded</p>
+                  <div class="row"><span class="sub">Brooklyn, NY</span><button class="add"><svg width="12" height="12" viewBox="0 0 12 12" stroke="currentColor" stroke-width="1.3"><path d="M6 1v10M1 6h10"/></svg>Add to pipeline</button></div>
+                </div>
+                <div class="contact">
+                  <div class="row">
+                    <div class="who">
+                      <img class="avatar" src="https://i.pravatar.cc/80?img=59" alt="">
+                      <div><div class="name">Alex Chen</div><div class="sub">Harborview Capital</div></div>
+                    </div>
+                    <div class="fit"><span class="bar"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><b>94</b>fit</div>
+                  </div>
+                  <p class="deal"><b>$34M</b> construction loan closed</p>
+                  <div class="row"><span class="sub">New York, NY</span><button class="add"><svg width="12" height="12" viewBox="0 0 12 12" stroke="currentColor" stroke-width="1.3"><path d="M6 1v10M1 6h10"/></svg>Add to pipeline</button></div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Screen -->
+          <article class="feature">
+            <div class="feature-head">
+              <h3><b>Screen</b> deals in seconds against your buy box.</h3>
+              <a href="#" class="arrow-btn" aria-label="Learn about screening">
+                <svg width="14" height="14" viewBox="0 0 14 14" stroke="currentColor" stroke-width="1.4" fill="none"><path d="M3 11L11 3M5 3h6v6"/></svg>
+              </a>
+            </div>
+            <div class="mock-stage">
+              <div class="mock stack">
+                <div class="mail">
+                  <div class="row">
+                    <div class="who">
+                      <img class="avatar lg" src="https://i.pravatar.cc/96?img=33" alt="">
+                      <div><div class="title">Northgate Lofts</div><div class="from">From: Grant Wilson · Ironwood</div></div>
+                    </div>
+                    <span class="time">May 28</span>
+                  </div>
+                  <p class="body">Sharing a $15M bridge opportunity in Portland.</p>
+                  <div class="row meta"><span>$15M · Bridge loan · Portland</span><span class="badge no">✕ Rejected</span></div>
+                </div>
+                <div class="mail active">
+                  <div class="row">
+                    <div class="who">
+                      <img class="avatar lg" src="https://i.pravatar.cc/96?img=68" alt="">
+                      <div>
+                        <div class="title">Harbor Point Plaza <svg width="14" height="14" viewBox="0 0 14 14" stroke="#94A0B4" stroke-width="1.2" fill="none"><path d="M9.5 4.5L5 9a1.4 1.4 0 0 0 2 2l5-5a2.8 2.8 0 0 0-4-4L3 7a4.2 4.2 0 0 0 6 6l4-4"/></svg></div>
+                        <div class="from">From: Jared Morrison · Westfield</div>
+                      </div>
+                    </div>
+                    <span class="time">9:42 AM</span>
+                  </div>
+                  <p class="body">Sharing the package for a $15M multifamily acquisition.</p>
+                  <div class="row meta"><span>$15M · Acquisition · Multifamily</span><span class="badge ok">✓ Approved</span></div>
+                </div>
+                <div class="mail">
+                  <div class="row">
+                    <div class="who">
+                      <img class="avatar lg" src="https://i.pravatar.cc/96?img=53" alt="">
+                      <div>
+                        <div class="title">Riverside Commons <svg width="14" height="14" viewBox="0 0 14 14" stroke="#94A0B4" stroke-width="1.2" fill="none"><path d="M9.5 4.5L5 9a1.4 1.4 0 0 0 2 2l5-5a2.8 2.8 0 0 0-4-4L3 7a4.2 4.2 0 0 0 6 6l4-4"/></svg></div>
+                        <div class="from">From: Daniel Okafor · Cobalt Ridge</div>
+                      </div>
+                    </div>
+                    <span class="time">8:15 AM</span>
+                  </div>
+                  <p class="body">Please review this $24.5M permanent financing request.</p>
+                  <div class="row meta"><span>$24.5M · Permanent · Retail</span><span class="badge ok">✓ Approved</span></div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Execute -->
+          <article class="feature">
+            <div class="feature-head">
+              <h3><b>Execute</b> financing and outreach with intelligence.</h3>
+              <a href="#" class="arrow-btn" aria-label="Learn about execution">
+                <svg width="14" height="14" viewBox="0 0 14 14" stroke="currentColor" stroke-width="1.4" fill="none"><path d="M3 11L11 3M5 3h6v6"/></svg>
+              </a>
+            </div>
+            <div class="mock-stage">
+              <div class="mock tl">
+                <div class="tl-item">
+                  <span class="tl-icon"><svg width="14" height="14" viewBox="0 0 14 14" stroke="#14B8A6" stroke-width="1.5" fill="none"><path d="M1.5 7.5l3 3 5.5-6M7 10.5l.5.5 5-6"/></svg></span>
+                  <div class="tl-line">Terms accepted from <span class="org"><i></i>Cobalt Ridge Bank</span> · just now</div>
+                  <div class="tl-box">
+                    <b>6.20% fixed · 10yr · 65% LTV · $18.5M</b>
+                    <div class="chips">
+                      <span class="chip"><svg width="12" height="13" viewBox="0 0 12 13" stroke="currentColor" stroke-width="1.1" fill="none"><path d="M2 1h5l3 3v8H2zM4 7h4M4 9h4"/></svg>Term sheet — v3</span>
+                      <span class="chip"><svg width="13" height="13" viewBox="0 0 13 13" stroke="#14B8A6" stroke-width="1.1" fill="none"><circle cx="6.5" cy="6.5" r="5.5"/><path d="M4 6.6l1.8 1.8L9 5"/></svg>Moved to Closing</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="tl-item">
+                  <span class="tl-icon"><img src="https://i.pravatar.cc/60?img=45" alt=""></span>
+                  <div class="tl-line"><b>Ava Lin</b> at <span class="org"><i></i>Cobalt Ridge</span> added a lender note · 2h</div>
+                  <div class="tl-box"><p>Credit is comfortable at the revised proceeds. We can hold the rate through Friday.</p></div>
+                </div>
+                <div class="tl-item">
+                  <span class="tl-icon"><svg width="14" height="14" viewBox="0 0 14 14" stroke="#A8B3C3" stroke-width="1.1" fill="none"><path d="M3 1.5h5l3 3v8H3zM5 7h4M5 9.5h4"/></svg></span>
+                  <div class="tl-line">Terms extracted from <span class="org"><i></i>Northshore Debt Partners</span> · 1d</div>
+                  <div class="tl-box">
+                    <b>6.45% fixed · 7yr · 60% LTV</b>
+                    <div class="chips"><span class="chip"><span class="pdf-ico"></span>Northshore_Term_Sheet.pdf</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Close -->
+          <article class="feature">
+            <div class="feature-head">
+              <h3><b>Close</b> more deals faster, without the back-and-forth.</h3>
+              <a href="#" class="arrow-btn" aria-label="Learn about closing">
+                <svg width="14" height="14" viewBox="0 0 14 14" stroke="currentColor" stroke-width="1.4" fill="none"><path d="M3 11L11 3M5 3h6v6"/></svg>
+              </a>
+            </div>
+            <div class="mock-stage">
+              <div class="mock" style="width:498px">
+                <div class="files">
+                  <div class="files-head">Requested files <span>0 / 3</span></div>
+                  <div class="file"><span class="radio"></span><div><b>Bank Statement</b><span>Awaiting file</span></div></div>
+                  <div class="file"><span class="radio"></span><div><b>Lease Agreement</b><span>Awaiting file</span></div></div>
+                  <div class="file"><span class="radio"></span><div><b>Rent Roll</b><span>Awaiting file</span></div></div>
+                  <div class="drop">
+                    <div class="drop-chip">
+                      <span class="ftile r"><svg width="12" height="12" viewBox="0 0 12 12" stroke="#fff" stroke-width="1.2" fill="none"><path d="M6 1c-1 3-3 7-5 8 3-1 7-1 10 0-2-1-4-5-5-8z"/></svg></span>
+                      <span class="ftile r"><svg width="12" height="12" viewBox="0 0 12 12" stroke="#fff" stroke-width="1.2" fill="none"><path d="M6 1c-1 3-3 7-5 8 3-1 7-1 10 0-2-1-4-5-5-8z"/></svg></span>
+                      <span class="ftile g"><svg width="12" height="12" viewBox="0 0 12 12" stroke="#fff" stroke-width="1.3" fill="none"><path d="M2 2l8 8M10 2l-8 8"/></svg></span>
+                      <span>3 files</span>
+                    </div>
+                    <svg class="cursor" width="16" height="20" viewBox="0 0 16 20" aria-hidden="true"><path d="M2 1v15l4-4 3 6 2.5-1-3-6H14z" fill="#fff" stroke="#111" stroke-width="1"/></svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Knowledge -->
+    <section class="knowledge" aria-label="Knowledge">
+      <!-- spreadsheet -->
+      <div class="app-tile" style="left:5%;top:20px;animation-delay:-2s"><svg viewBox="0 0 26 28"><rect x="6" y="2" width="18" height="24" rx="2" fill="#2f8f57"/><rect x="2" y="9" width="12" height="12" rx="2" fill="#1d6b3c"/><path d="M5 12l6 6M11 12l-6 6" stroke="#fff" stroke-width="1.6"/></svg></div>
+      <div class="app-tile" style="left:45%;top:-20px;animation-delay:-5s"><svg viewBox="0 0 26 28"><path d="M6 2h11l6 6v18H6z" fill="#3d8a59"/><rect x="2" y="15" width="13" height="8" rx="2" fill="#2a6b45"/><text x="8.5" y="21" font-size="5" fill="#fff" text-anchor="middle" font-family="sans-serif">CSV</text></svg></div>
+      <div class="app-tile" style="right:5%;top:58px;animation-delay:-1s"><svg viewBox="0 0 26 28"><path d="M6 2h11l6 6v18H6z" fill="#c78a2c"/><rect x="2" y="15" width="13" height="8" rx="2" fill="#9a6420"/><text x="8.5" y="21" font-size="5" fill="#fff" text-anchor="middle" font-family="sans-serif">ZIP</text></svg></div>
+      <div class="app-tile" style="left:14%;top:150px;animation-delay:-7s"><svg viewBox="0 0 26 28"><path d="M3 10l10-7 10 7v14H3z" fill="#2a5ea8"/><path d="M3 10l10 7 10-7" fill="#3b78c8"/><circle cx="7" cy="19" r="4" fill="#1b4a8a"/><text x="7" y="21" font-size="5.5" fill="#fff" text-anchor="middle" font-family="sans-serif">O</text></svg></div>
+      <div class="app-tile blur" style="right:-2%;top:196px;animation-delay:-3s"><svg viewBox="0 0 26 28"><path d="M3 8v14h4V12l6 5 6-5v10h4V8l-10 8z" fill="#c64538"/><path d="M3 8l10 8 10-8" stroke="#3b7be0" stroke-width="2" fill="none"/></svg></div>
+      <div class="app-tile blur" style="left:-1%;bottom:110px;animation-delay:-6s"><svg viewBox="0 0 26 28"><rect x="6" y="4" width="18" height="20" rx="2" fill="#2f5bb8"/><rect x="2" y="10" width="12" height="12" rx="2" fill="#1e3f8a"/><text x="8" y="19" font-size="7" fill="#fff" text-anchor="middle" font-family="sans-serif">W</text></svg></div>
+      <div class="app-tile" style="right:14%;bottom:80px;animation-delay:-4s"><svg viewBox="0 0 26 28"><path d="M6 2h11l6 6v18H6z" fill="#b5483c"/><rect x="2" y="15" width="13" height="8" rx="2" fill="#8f3027"/><text x="8.5" y="21" font-size="5" fill="#fff" text-anchor="middle" font-family="sans-serif">PDF</text></svg></div>
+      <div class="app-tile blur" style="left:17%;bottom:-10px;width:100px;height:70px;animation-delay:-8s"><svg viewBox="0 0 28 20" style="width:30px;height:22px"><path d="M7 18a5 5 0 0 1 0-10 7 7 0 0 1 13-1 5 5 0 0 1 1 11z" fill="#2f78d0"/></svg></div>
+      <h2><b>Knowledge is power.</b> Your firm's data. Private. Structured. Secure. Ready anywhere you work.</h2>
+    </section>
+
+    <!-- Chat window -->
+    <section class="chat-section" aria-label="NEXO assistant">
+      <div class="window">
+        <div class="window-head">
+          <h4>Harbor Point Plaza</h4>
+          <div class="win-ctrls">
+            <button aria-label="Minimize"><svg width="10" height="10" viewBox="0 0 10 10" stroke="currentColor" stroke-width="1"><path d="M1 5h8"/></svg></button>
+            <button aria-label="Expand"><svg width="10" height="10" viewBox="0 0 10 10" stroke="currentColor" stroke-width="1" fill="none"><path d="M6 1h3v3M9 1L5.5 4.5M4 9H1V6M1 9l3.5-3.5"/></svg></button>
+            <button aria-label="Close"><svg width="10" height="10" viewBox="0 0 10 10" stroke="currentColor" stroke-width="1"><path d="M1.5 1.5l7 7M8.5 1.5l-7 7"/></svg></button>
+          </div>
+        </div>
+        <div class="window-body"></div>
+        <form class="composer" onsubmit="event.preventDefault()">
+          <label class="sr" for="ask" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Ask a follow-up</label>
+          <input id="ask" type="text" placeholder="Ask a follow-up...">
+          <div class="row">
+            <div class="tools">
+              <button type="button" aria-label="Attach"><svg width="12" height="12" viewBox="0 0 12 12" stroke="currentColor" stroke-width="1.1"><path d="M6 1v10M1 6h10"/></svg></button>
+              <button type="button" aria-label="Mention">@</button>
+            </div>
+            <div class="tools">
+              <button type="button" class="agent">
+                <svg width="11" height="11" viewBox="0 0 11 11" fill="#14B8A6"><path d="M0 0l4 1.5L1.5 4zM11 11L7 9.5 9.5 7zM3 3l5 5-1 1-5-5z" opacity=".9"/></svg>
+                Agent
+                <svg width="8" height="8" viewBox="0 0 8 8" stroke="currentColor" stroke-width="1" fill="none"><path d="M1.5 3l2.5 2.5L6.5 3"/></svg>
+              </button>
+              <button type="submit" class="send" aria-label="Send">
+                <svg width="10" height="10" viewBox="0 0 10 10" stroke="currentColor" stroke-width="1.2" fill="none"><path d="M5 9V1M1.5 4.5L5 1l3.5 3.5"/></svg>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- Solutions carousel -->
+    <section class="solutions" id="solutions" aria-label="Solutions">
+      <div class="frame">
+        <div class="tabs">
+          <div class="tabs-track" id="tabs-track" role="tablist">
+            <button class="tab" role="tab" aria-selected="true">Capital markets</button>
+            <button class="tab" role="tab" aria-selected="false">Acquisitions</button>
+            <button class="tab" role="tab" aria-selected="false">Asset management</button>
+          </div>
+        </div>
+        <div class="ruler" aria-hidden="true"><div class="ruler-ticks" id="ruler"></div></div>
+        <div class="sol-card">
+          <div class="sol-copy fade-swap" id="sol-copy">
+            <h3>Run the whole debt process from sourcing to close in one deal record.</h3>
+            <p>Match lenders, manage outreach, and compare terms through closing.</p>
+          </div>
+          <div class="sol-media"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Mobile menu
+    const menu = document.getElementById('mobile-menu');
+    const openBtn = document.getElementById('menu-open');
+    const setMenu = (open) => {
+      menu.classList.toggle('open', open);
+      menu.setAttribute('aria-hidden', String(!open));
+      openBtn.setAttribute('aria-expanded', String(open));
+      document.body.style.overflow = open ? 'hidden' : '';
+    };
+    openBtn.addEventListener('click', () => setMenu(true));
+    document.getElementById('menu-close').addEventListener('click', () => setMenu(false));
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+    addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
+
+    // Solutions carousel: tab track + tick ruler
+    const ruler = document.getElementById('ruler');
+    for (let i = 0; i < 90; i++) {
+      const t = document.createElement('i');
+      if (i % 10 === 5) t.className = 'major';
+      ruler.appendChild(t);
+    }
+    const copy = {
+      'Capital markets': ['Run the whole debt process from sourcing to close in one deal record.', 'Match lenders, manage outreach, and compare terms through closing.'],
+      'Acquisitions': ['Underwrite, track, and close acquisitions from a single pipeline.', 'Screen packages against your buy box and keep every party in sync.'],
+      'Asset management': ['Keep every asset, lease, and loan current without the spreadsheets.', 'Monitor performance, maturities, and covenants in one place.'],
+    };
+    const track = document.getElementById('tabs-track');
+    const tabs = [...track.querySelectorAll('.tab')];
+    const copyEl = document.getElementById('sol-copy');
+    const select = (idx) => {
+      const tab = tabs[idx];
+      tabs.forEach(t => t.setAttribute('aria-selected', String(t === tab)));
+      track.style.transform = `translateX(${-(tab.offsetLeft + tab.offsetWidth / 2)}px)`;
+      ruler.style.transform = `translateX(${-idx * 130}px)`;
+      copyEl.classList.add('out');
+      setTimeout(() => {
+        const [h, p] = copy[tab.textContent];
+        copyEl.querySelector('h3').textContent = h;
+        copyEl.querySelector('p').textContent = p;
+        copyEl.classList.remove('out');
+      }, 200);
+    };
+    tabs.forEach((t, i) => t.addEventListener('click', () => select(i)));
+    // Center first tab without animating
+    track.style.transition = 'none';
+    track.style.transform = `translateX(${-(tabs[0].offsetLeft + tabs[0].offsetWidth / 2)}px)`;
+    requestAnimationFrame(() => { track.style.transition = ''; });
+    document.fonts && document.fonts.ready.then(() => {
+      const cur = tabs.findIndex(t => t.getAttribute('aria-selected') === 'true');
+      track.style.transform = `translateX(${-(tabs[cur].offsetLeft + tabs[cur].offsetWidth / 2)}px)`;
+    });
+  </script>
+</body>
+</html>
